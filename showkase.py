@@ -47,7 +47,6 @@ class One(Screen):
 
         line = FloatLayout()
         lab_inst = Label(text = "Вхід", size_hint = (1, 0.3), pos_hint = {'y':0.65}, font_size = 56)
-        line.add_widget(lab_inst)
         lab_name = Label(text = "Введіть електронну адресу", size_hint = (0.3, 0.4), pos_hint ={'y':0.35, "x":0.1})
         lab_password = Label(text = 'Введіть пароль', size_hint = (0.2, 0.4), pos_hint = {'y':0.25, 'x':0.1} )
         self.name_input = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.52, 'x':0.4})
@@ -55,11 +54,13 @@ class One(Screen):
         but_go = Button(text = "Вхід",size_hint = (0.3, 0.1), pos_hint = {'y':0.29, 'x':0.13})
         but_res = Button(text = "Зареєструватись",size_hint = (0.3, 0.1), pos_hint = {'y':0.29, 'x':0.45})
 
-        img = Image(source='fon.png', size = (1,1))
-        logo= Image(source='logo.png',size_hint = (1,1))
+        img = Image(source='fon.png',size_hint = (1.27, 1),pos_hint = {'y':0.0001, 'x':0.00001})
+        logo= Image(source='logo.png',size_hint = (0.1,0.1),pos_hint = {'y':0.88, 'x':0.9})
 
         line.add_widget(img)
         line.add_widget(logo)
+
+        line.add_widget(lab_inst)
 
         line.add_widget(self.name_input)
         line.add_widget(self.password_input)
@@ -112,6 +113,16 @@ class Zero(Screen):
 
         but_res = Button(text = "Зареєструватись",size_hint = (0.3, 0.1), pos_hint = {'y':0.19, 'x':0.4})
 
+        but_inst = Button(text = "Назад", size_hint = (0.1, 0.1), pos_hint = {'y':0.85, "x":0.01}, font_size = 20)
+
+        img = Image(source='fon.png',size_hint = (1.27, 1),pos_hint = {'y':0.0001, 'x':0.00001})
+        logo= Image(source='logo.png',size_hint = (0.1,0.1),pos_hint = {'y':0.88, 'x':0.9})
+
+        line.add_widget(img)
+        line.add_widget(logo)
+
+        line.add_widget(but_inst)
+
         line.add_widget(lab_inst)
         line.add_widget(lab_name)
         line.add_widget(lab_password)
@@ -126,6 +137,7 @@ class Zero(Screen):
         self.add_widget(line)
 
         but_res.on_press = self.check_in
+        but_inst.on_press = self.back
 
     def check_in(self):
         if self.password_input.text == self.password_cor_input.text:
@@ -133,6 +145,9 @@ class Zero(Screen):
             self.file.write(self.name_input.text +"\n")
             self.file.write(self.password_input.text +"\n")
             self.file.close()
+    def back(self):
+        self.manager.transition.direction = "up"
+        self.manager.current = "one"
 
 class Two(Screen):
     def __init__(self, **kwargs):
@@ -144,10 +159,18 @@ class Two(Screen):
         but_bus = Button(text = "Автобус", size_hint = (0.17, 0.17), pos_hint = {'y':0.58, "x":0.28}, font_size = 20)
         but_trol = Button(text = "Тролейбус", size_hint = (0.17, 0.17), pos_hint = {'y':0.58, "x":0.58}, font_size = 20)
 
+        but_back = Button(text = "Назад", size_hint = (0.1, 0.1), pos_hint = {'y':0.85, "x":0.14}, font_size = 20)
+
         lab_treck = Label(text = treck, size_hint = (0.2, 0.4), pos_hint = {'y':0.28, 'x':0.07}, font_size = 13)
 
+        img = Image(source='fon.png',size_hint = (1.27, 1),pos_hint = {'y':0.0001, 'x':0.00001})
+        logo= Image(source='logo.png',size_hint = (0.1,0.1),pos_hint = {'y':0.88, 'x':0.9})
+
+        line.add_widget(img)
+        line.add_widget(logo)
 
         line.add_widget(but_inst)
+        line.add_widget(but_back)
         line.add_widget(lab_treck)
         line.add_widget(but_trol)
         line.add_widget(but_bus)
@@ -156,6 +179,7 @@ class Two(Screen):
         but_inst.on_press = self.next
         but_bus.on_press = self.next1
         but_trol.on_press = self.next2
+        but_back.on_press = self.back
     def next(self):
         self.manager.transition.direction = "right"
         self.manager.current = "three"
@@ -165,6 +189,9 @@ class Two(Screen):
     def next2(self):
         self.manager.transition.direction = "up"
         self.manager.current = "five"
+    def back(self):
+        self.manager.transition.direction = "down"
+        self.manager.current = "one"
 
 class Three(Screen):
     def __init__(self, **kwargs):
@@ -177,6 +204,12 @@ class Three(Screen):
         self.name_input = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.52, 'x':0.4})
         self.password_input = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.42, 'x':0.4})
         but_go = Button(text = "Підтвердити та повернутись",size_hint = (0.3, 0.1), pos_hint = {'y':0.297, 'x':0.157})
+
+        img = Image(source='fon.png',size_hint = (1.27, 1),pos_hint = {'y':0.0001, 'x':0.00001})
+        logo= Image(source='logo.png',size_hint = (0.1,0.1),pos_hint = {'y':0.88, 'x':0.9})
+
+        line.add_widget(img)
+        line.add_widget(logo)
 
         self.add_widget(line)
 
@@ -206,12 +239,20 @@ class Four(Screen):
         lab_name = Label(text = "Введіть номер автобуса", size_hint = (0.3, 0.4), pos_hint ={'y':0.55, "x":0.1})
         lab_hove = Label(text = "Введіть кількість квитків", size_hint = (0.3, 0.4), pos_hint ={'y':0.45, "x":0.1})
 
+        but_back = Button(text = "Назад", size_hint = (0.1, 0.1), pos_hint = {'y':0.85, "x":0.01}, font_size = 20)
 
         self.name_input = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.72, 'x':0.4})
         self.name_hove = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.62, 'x':0.4})
         but_res = Button(text = "Зареєструватись",size_hint = (0.24, 0.1), pos_hint = {'y':0.47, 'x':0.14})
         
+        img = Image(source='fon.png',size_hint = (1.27, 1),pos_hint = {'y':0.0001, 'x':0.00001})
+        logo= Image(source='logo.png',size_hint = (0.1,0.1),pos_hint = {'y':0.88, 'x':0.9})
+
+        line.add_widget(img)
+        line.add_widget(logo)
+
         self.add_widget(line)
+        self.add_widget(but_back)
         self.add_widget(lab_name)
         self.add_widget(lab_hove)
         self.add_widget(self.name_input)
@@ -219,6 +260,7 @@ class Four(Screen):
         self.add_widget(but_res)
 
         but_res.on_press = self.show
+        but_back.on_press = self.back
 
     def show(self):
         global check
@@ -237,6 +279,9 @@ class Four(Screen):
         self.add_widget(lab_info2)
         self.add_widget(lab_info3)
         self.add_widget(lab_info4)
+    def back(self):
+        self.manager.transition.direction = "down"
+        self.manager.current = "two"
 
 class Five(Screen):
     def __init__(self, **kwargs):
@@ -248,12 +293,20 @@ class Five(Screen):
         lab_name = Label(text = "Введіть номер тролейбуса", size_hint = (0.3, 0.4), pos_hint ={'y':0.55, "x":0.1})
         lab_hove = Label(text = "Введіть кількість квитків", size_hint = (0.3, 0.4), pos_hint ={'y':0.45, "x":0.1})
 
+        but_back = Button(text = "Назад", size_hint = (0.1, 0.1), pos_hint = {'y':0.85, "x":0.01}, font_size = 20)
 
         self.name_input = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.72, 'x':0.4})
         self.name_hove = TextInput(multiline = False, size_hint = (0.3, 0.05), pos_hint = {'y':0.62, 'x':0.4})
         but_res = Button(text = "Зареєструватись",size_hint = (0.24, 0.1), pos_hint = {'y':0.47, 'x':0.14})
+
+        img = Image(source='fon.png',size_hint = (1.27, 1),pos_hint = {'y':0.0001, 'x':0.00001})
+        logo= Image(source='logo.png',size_hint = (0.1,0.1),pos_hint = {'y':0.88, 'x':0.9})
+
+        line.add_widget(img)
+        line.add_widget(logo)
         
         self.add_widget(line)
+        self.add_widget(but_back)
         self.add_widget(lab_name)
         self.add_widget(lab_hove)
         self.add_widget(self.name_input)
@@ -261,6 +314,7 @@ class Five(Screen):
         self.add_widget(but_res)
 
         but_res.on_press = self.show
+        but_back.on_press = self.back
 
     def show(self):
         global check
@@ -279,6 +333,10 @@ class Five(Screen):
         self.add_widget(lab_info2)
         self.add_widget(lab_info3)
         self.add_widget(lab_info4)
+    
+    def back(self):
+        self.manager.transition.direction = "down"
+        self.manager.current = "two"
 
 
 
